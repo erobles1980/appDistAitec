@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "13952844189",
+    "project_id": "appdistributivoaulaaitec",
+    "storage_bucket": "appdistributivoaulaaitec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13952844189:android:4733efcf336bd9f0c76f74",
+        "android_client_info": {
+          "package_name": "com.appdistaitec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "13952844189-dvedo13qll7l9skqul9hpm439b3h4flr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appdistaitec",
+            "certificate_hash": "8d39b8ee06170a8f01c63d5ebe7814b13996af9f"
+          }
+        },
+        {
+          "client_id": "13952844189-8crnndetn29bg52u6a7700ehetedkpal.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB34HjfQlyzKD3G3RIbcDhIObNQ8c7AmBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13952844189-8crnndetn29bg52u6a7700ehetedkpal.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
