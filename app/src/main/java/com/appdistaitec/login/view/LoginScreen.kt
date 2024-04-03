@@ -1,6 +1,11 @@
 package com.appdistaitec.login.view
 
+import android.content.Intent
 import android.widget.Toast
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,57 +26,62 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.appdistaitec.Navigation.Screens
 import com.appdistaitec.R
-import com.appdistaitec.login.model.SignInState
-import com.appdistaitec.login.viewmodel.LoginScreenViewModel
+import com.appdistaitec.login.service.AuthRes
+import com.appdistaitec.login.service.AuthUiClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.launch
 
 //@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginScreen(
-    state: SignInState,
-    onSignInClick: () -> Unit
-
-    //viewModel: LoginScreenViewModel=androidx.lifecycle.viewmodel.compose.viewModel()
+   auth: AuthUiClient,
+   navigation: NavController
 ){
     val context = LocalContext.current
-    LaunchedEffect(key1 = state.signInError) {
-        state.signInError?.let { error ->
-            Toast.makeText(
-                context,
-                error,
-                Toast.LENGTH_LONG
-            ).show()
+    val scope= rememberCoroutineScope()
+
+    val googleSignInLauncher= rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        when (val account =
+            auth.handleSignInResult(GoogleSignIn.getSignedInAccountFromIntent(result.data))) {
+            is AuthRes.Success -> {
+                val credential = GoogleAuthProvider.getCredential(account?.data?.idToken, null)
+                scope.launch {
+                    val fireUser = auth.signInWithGoogleCredential(credential)
+                    if (fireUser != null) {
+                        Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()
+                        navigation.navigate(Screens.MainScreen.screen) {
+                            popUpTo(Screens.LoginScreen.screen) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                }
+            }
+
+            is AuthRes.Error -> {
+                Toast.makeText(context, "Error: ${account.errorMessage}", Toast.LENGTH_SHORT).show()
+            }
+
+            else -> {
+                Toast.makeText(context, "Error desconocido", Toast.LENGTH_SHORT).show()
+            }
         }
     }
-//    val launcher = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts
-//            .StartActivityForResult()
-//    ) {
-//        val task= GoogleSignIn.getSignedInAccountFromIntent(it.data)
-//        try {
-//            val account=task.getResult(ApiException::class.java)
-//            val credential=GoogleAuthProvider.getCredential(account.idToken,null)
-//      //      viewModel.signInWithGoogleCredential(credential){
-//                //
-//            //}
-//        }
-//        catch (e: Exception){
-//
-//        }
-//    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ){
-        Login(Modifier.align(Alignment.Center),onSignInClick)
+        Login(Modifier.align(Alignment.Center),auth,googleSignInLauncher)
     }
 }
 
@@ -79,14 +89,15 @@ fun LoginScreen(
 @Composable
 fun Login(
     modifier: Modifier,
-    onSignInClick: () -> Unit
-    ) {
+    auth: AuthUiClient,
+    googleSignInLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>
+) {
     Column (modifier = modifier) {
         HeaderImage(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.padding(16.dp))
         StartTag(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.padding(12.dp))
-        GoogleButton(onSignInClick)
+        GoogleButton(auth,googleSignInLauncher)
     }
 }
 
@@ -112,11 +123,14 @@ fun StartTag(modifier: Modifier) {
 
 @Composable
 fun GoogleButton(
-    onSignInClick: () -> Unit
+    auth: AuthUiClient,
+    googleSignInLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>
 ) {
 
     Button(
-        onClick = onSignInClick,
+        onClick = {
+            auth.signInWithGoogle(googleSignInLauncher)
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
