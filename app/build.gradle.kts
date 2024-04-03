@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -53,6 +54,9 @@ android {
 dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.firebase.config.ktx)
+    implementation(libs.firebase.messaging.ktx)
+    implementation(libs.firebase.crashlytics.ktx)
     val nav_version = "2.7.7"
     val lifecycle_version = "2.7.0"
 
