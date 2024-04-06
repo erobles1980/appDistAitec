@@ -80,6 +80,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation ("com.google.firebase:firebase-auth-ktx:21.1.0")
 
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     //Navigation Compose
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
