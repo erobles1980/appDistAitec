@@ -5,8 +5,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object apiInstance {
-    //private val base_url="http://hermes.aitec.edu.ec:3000/"
-    private val base_url="https://9831d3a3-1e09-42ce-89a6-b7dbd66f5f27.mock.pstmn.io/"
+    private val base_url="http://hermes.aitec.edu.ec:3000/"
+    //private val base_url="https://debae353-b3da-461a-a721-439714e6ca02.mock.pstmn.io"
     private val apiinstance:Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(base_url)
