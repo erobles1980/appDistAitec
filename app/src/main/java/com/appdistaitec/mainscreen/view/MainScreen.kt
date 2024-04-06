@@ -54,6 +54,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.appdistaitec.Navigation.Screens
 import com.appdistaitec.R
+import com.appdistaitec.classday.view.ClassDay
 import com.appdistaitec.login.service.AuthUiClient
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ConfigUpdate
@@ -128,6 +129,8 @@ fun MainScreen(
                                 fontSize = 12.sp,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis)
+
+
                         }
                     }
                 },
@@ -251,7 +254,7 @@ fun RowScope.AddItem(screens: BottomNavScreen, currentDestination: NavDestinatio
 fun BottomNavGraph(navController: NavHostController, context: Context, authManager: AuthUiClient) {
     NavHost(navController = navController, startDestination = BottomNavScreen.Clases.route) {
         composable(route = BottomNavScreen.Clases.route) {
-            ClassDay()
+            ClassDay(authManager)
         }
         composable(route = BottomNavScreen.Rutas.route) {
             ClassroomRoute()
