@@ -9,6 +9,8 @@ data class ResponseBody(
     val paralelo:String
 )
 
-data class CedulaBody(
-    val cedula:String
+data class InfoBody(
+    val cedula:String,
+    val periodo:String,
+    val semestre:String
 )
