@@ -6,12 +6,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.appdistaitec.classday.data.infoRepositoryApiHermes
+import com.appdistaitec.classday.data.InfoRepositoryApiHermes
 import com.appdistaitec.classday.model.InfoEstudiantes
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ClassDayViewModel:ViewModel(){
-    private val infoRepository=infoRepositoryApiHermes()
+@HiltViewModel
+class ClassDayViewModel @Inject constructor(
+     private val infoRepository:InfoRepositoryApiHermes
+):ViewModel(){
 
     var infoestudiantes by mutableStateOf<InfoEstudiantes?>(null)
 
@@ -36,9 +40,3 @@ class ClassDayViewModel:ViewModel(){
     }
 
 }
-
-
-
-
-
-

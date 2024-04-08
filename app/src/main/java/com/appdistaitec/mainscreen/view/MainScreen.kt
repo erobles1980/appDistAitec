@@ -42,7 +42,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -56,7 +55,6 @@ import coil.request.ImageRequest
 import com.appdistaitec.Navigation.Screens
 import com.appdistaitec.R
 import com.appdistaitec.classday.view.ClassDay
-import com.appdistaitec.classday.viewmodel.ClassDayViewModel
 import com.appdistaitec.login.service.AuthUiClient
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ConfigUpdate
@@ -254,10 +252,10 @@ fun RowScope.AddItem(screens: BottomNavScreen, currentDestination: NavDestinatio
 
 @Composable
 fun BottomNavGraph(navController: NavHostController, context: Context, authManager: AuthUiClient) {
-    val classDayviewModel: ClassDayViewModel = viewModel()
+
     NavHost(navController = navController, startDestination = BottomNavScreen.Clases.route) {
         composable(route = BottomNavScreen.Clases.route) {
-            ClassDay(authManager,classDayviewModel)
+            ClassDay(authManager)//,classDayviewModel)
         }
         composable(route = BottomNavScreen.Rutas.route) {
             ClassroomRoute()
