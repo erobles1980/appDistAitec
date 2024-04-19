@@ -20,6 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppDistAitec"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB34HjfQlyzKD3G3RIbcDhIObNQ8c7AmBg"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

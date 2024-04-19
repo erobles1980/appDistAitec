@@ -1,4 +1,4 @@
-package com.appdistaitec.classday.service
+package com.appdistaitec.classday.service.hermes
 
 import dagger.Module
 import dagger.Provides
@@ -12,22 +12,22 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object apiInstance {
 
-    private val base_url="https://hermes.aitec.edu.ec:3001/"
-    //private val base_url="https://debae353-b3da-461a-a721-439714e6ca02.mock.pstmn.io"
+
+    private val base_url_H="https://hermes.aitec.edu.ec:3001/"
+    //private val base_url_H="https://747c8df5-118f-44dc-956e-c4d418820713.mock.pstmn.io"
 
     @Provides
     @Singleton
-    fun provideRetrofit():Retrofit=Retrofit.Builder()
-                                .baseUrl(base_url)
+    fun provideRetrofitH():Retrofit=Retrofit.Builder()
+                                .baseUrl(base_url_H)
                                 //.client(createOkHttpClient())
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build()
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
+    fun provideApiServiceH(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
-
 
 }

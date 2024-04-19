@@ -1,4 +1,4 @@
-package com.appdistaitec.classday.service
+package com.appdistaitec.classday.service.hermes
 
 import com.appdistaitec.classday.model.InfoBody
 import com.appdistaitec.classday.model.ResponseBody
