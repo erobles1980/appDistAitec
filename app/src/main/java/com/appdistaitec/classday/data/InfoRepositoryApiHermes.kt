@@ -2,7 +2,7 @@ package com.appdistaitec.classday.data
 
 import com.appdistaitec.classday.model.InfoBody
 import com.appdistaitec.classday.model.ResponseBody
-import com.appdistaitec.classday.service.ApiService
+import com.appdistaitec.classday.service.hermes.ApiService
 import retrofit2.Response
 import javax.inject.Inject
 
